@@ -33,15 +33,5 @@ This XML-to-CSV Converter Tool is a standalone Windows application designed to h
 ## Contributing
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-## Authors
-- **[Your Name]** - *Initial work* - [YourGitHubProfile](https://github.com/YourGitHubProfile)
-
-See also the list of [contributors](https://github.com/your-repo/XML-to-CSV-Converter-Tool/contributors) who participated in this project.
-
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Acknowledgments
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
