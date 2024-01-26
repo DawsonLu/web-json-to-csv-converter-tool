@@ -11,6 +11,7 @@ def fetch_and_parse_json(url):
 
         # Parse JSON
         data = response.json()
+        print(data)
         return data
     except requests.exceptions.RequestException as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
@@ -24,48 +25,31 @@ def save_json(data, filename):
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred while saving JSON: {e}")
 
-def flatten_json(y):
-    out = {}
-
-    def flatten(x, name=''):
+def flatten_json(y, parent_id=None):
+    out = []
+    
+    def flatten(x, name='', parent_id=None):
         if type(x) is dict:
             for a in x:
-                flatten(x[a], f'{name}{a}_')
+                flatten(x[a], f'{name}{a}_', parent_id)
         elif type(x) is list:
-            i = 0
-            for a in x:
-                flatten(a, f'{name}{i}_')
-                i += 1
+            for i, a in enumerate(x):
+                if type(a) is dict:
+                    # Concatenate values within the nested dictionary
+                    flattened_dict = {f"{name[:-1]}_{key}": value for key, value in a.items()}
+                    out.append({**flattened_dict, 'parent_id': parent_id})
+                else:
+                    out.append({name[:-1]: a, 'parent_id': parent_id})
         else:
-            out[name[:-1]] = x
-
-    flatten(y)
+            out.append({name[:-1]: x, 'parent_id': parent_id})
+    
+    flatten(y, parent_id=parent_id)
     return out
-
-def expand_nested_arrays(data, array_keys):
-    expanded_data = []
-    for entry in data:
-        base_entry = {k: v for k, v in entry.items() if k not in array_keys}
-        for key in array_keys:
-            if key in entry and isinstance(entry[key], list):
-                for item in entry[key]:
-                    new_entry = base_entry.copy()
-                    new_entry.update(flatten_json({key: item}))
-                    expanded_data.append(new_entry)
-            else:
-                expanded_data.append(base_entry)
-    return expanded_data
 
 def convert_to_csv(data, filename):
     try:
-        # Define keys that contain nested arrays
-        array_keys = ['key_with_nested_array']  # Replace with your actual key(s)
-
-        # Flatten data and expand nested arrays
-        flat_data = [flatten_json(d) for d in data] if isinstance(data, list) else [flatten_json(data)]
-        expanded_data = expand_nested_arrays(flat_data, array_keys)
-
-        df = pd.DataFrame(expanded_data)
+        flat_data = flatten_json(data)
+        df = pd.DataFrame(flat_data)
         df.to_csv(filename, index=False)
         messagebox.showinfo("Success", f"Data successfully saved to {filename}")
     except Exception as e:
@@ -84,13 +68,6 @@ def on_convert_clicked():
                                                      filetypes=[("CSV Files", "*.csv")])
         if csv_file_path:
             convert_to_csv(data, csv_file_path)
-
-        # Ask user for location and filename for saving the JSON file
-        json_file_path = filedialog.asksaveasfilename(defaultextension=".json",
-                                                      filetypes=[("JSON Files", "*.json")])
-        if json_file_path:
-            save_json(data, json_file_path)
-
 
 # Set up the Tkinter window
 window = tk.Tk()
