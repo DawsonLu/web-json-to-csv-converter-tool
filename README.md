@@ -1,12 +1,12 @@
-# Web-XML-to-CSV-Converter-Tool
+# Web-JSON-to-CSV-Converter-Tool
 
 ## Overview
-This XML-to-CSV Converter Tool is a standalone Windows application designed to help non-technical users easily convert XML data fetched from specified URLs into CSV format. It aims to streamline data processing tasks in a workplace environment with a focus on simplicity and usability.
+This JSON-to-CSV Converter Tool is a standalone Windows application designed to help non-technical users easily convert JSON data fetched from specified URLs into CSV format. It aims to streamline data processing tasks in a workplace environment with a focus on simplicity and usability.
 
 ## Features
 - **User-Friendly Interface**: Simple GUI for hassle-free operation.
-- **URL Input**: Directly fetch XML data from specified URLs.
-- **XML to CSV Conversion**: Efficiently parses XML data and converts it to CSV format.
+- **URL Input**: Directly fetch JSON data from specified URLs.
+- **JSON to CSV Conversion**: Efficiently parses JSON data and converts it to CSV format.
 - **Error Handling**: Graceful management of network issues or invalid data.
 - **Standalone Application**: No need for additional installations or configurations.
 
@@ -21,7 +21,7 @@ This XML-to-CSV Converter Tool is a standalone Windows application designed to h
 
 ### Usage
 1. Open the application.
-2. Enter the URL from which you want to fetch the XML data.
+2. Enter the URL from which you want to fetch the JSON data.
 3. Click the 'Convert' button to start the conversion process.
 4. The application will save the CSV file in a predefined or user-specified location.
 
